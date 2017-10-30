@@ -169,7 +169,6 @@
 
       call pio_initdecomp(ice_pio_subsystem, pio_type, (/nx_global,ny_global/), &
            dof2d, iodesc)
-      call pio_writedof("icedecomp2d", (/nx_global,ny_global/), dof2d, MPI_COMM_ICE)
       deallocate(dof2d)
 
    end subroutine ice_pio_initdecomp_2d
@@ -247,8 +246,6 @@
 
       call pio_initdecomp(ice_pio_subsystem, pio_type, (/nx_global,ny_global,ndim3/), &
            dof3d, iodesc)
-      call pio_writedof("icedecomp3d", (/nx_global,ny_global, ndim3/), dof3d, MPI_COMM_ICE)
-
       deallocate(dof3d)
 
    end subroutine ice_pio_initdecomp_3d
