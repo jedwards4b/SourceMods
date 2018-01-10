@@ -569,7 +569,6 @@
 ! author David A Bailey, NCAR
 
       subroutine final_restart()
-      use pio, only : pio_set_log_level
       use ice_calendar, only: istep1, time, time_forc
       use ice_communicate, only: my_task, master_task
       use ice_fileunits, only: nu_diag
