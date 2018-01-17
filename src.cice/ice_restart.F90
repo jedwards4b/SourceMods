@@ -22,8 +22,7 @@
       save
 
       type(file_desc_t)     :: File
-      type(var_desc_t)      :: vardesc
-
+      type(var_desc_t)    :: vardesc
       type(io_desc_t)       :: iodesc2d
       type(io_desc_t)       :: iodesc3d_ncat
 
@@ -537,10 +536,10 @@
 
          if (ndims==3) then
             call pio_write_darray(File, vardesc, iodesc3d_ncat,work(:,:,:,1:nblocks), &
-                 status)
+                 status, fillval=c0)
          elseif (ndims == 2) then
             call pio_write_darray(File, vardesc, iodesc2d, work(:,:,1,1:nblocks), &
-                 status)
+                 status, fillval=c0)
          else
             write(nu_diag,*) "ndims not supported",ndims,ndim3
          endif
@@ -590,8 +589,9 @@
 ! author David A Bailey, NCAR
 
       subroutine define_rest_field(File, vname, dims)
+      use ice_constants, only: c0
 
-      type(file_desc_t)      , intent(in)  :: File
+      type(file_desc_t)      , intent(inout)  :: File
       character (len=*)      , intent(in)  :: vname
       integer (kind=int_kind), intent(in)  :: dims(:)
 
@@ -599,6 +599,8 @@
         status        ! status variable from netCDF routine
 
       status = pio_def_var(File,trim(vname),pio_double,dims,vardesc)
+
+      status = pio_put_att(File, vardesc, '_FillValue', c0)
 
       end subroutine define_rest_field
 
